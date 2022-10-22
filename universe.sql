@@ -48,7 +48,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.galaxy (
-    id_galaxy integer NOT NULL,
+    galaxy_id integer NOT NULL,
     name character varying(50),
     description text,
     has_life boolean NOT NULL,
@@ -81,7 +81,7 @@ ALTER TABLE public.galaxy_id_galaxy_seq OWNER TO freecodecamp;
 -- Name: galaxy_id_galaxy_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.galaxy_id_galaxy_seq OWNED BY public.galaxy.id_galaxy;
+ALTER SEQUENCE public.galaxy_id_galaxy_seq OWNED BY public.galaxy.galaxy_id;
 
 
 --
@@ -89,7 +89,7 @@ ALTER SEQUENCE public.galaxy_id_galaxy_seq OWNED BY public.galaxy.id_galaxy;
 --
 
 CREATE TABLE public.moon (
-    id_moon integer NOT NULL,
+    moon_id integer NOT NULL,
     name character varying(50),
     description text,
     has_life boolean NOT NULL,
@@ -123,7 +123,7 @@ ALTER TABLE public.moon_id_moon_seq OWNER TO freecodecamp;
 -- Name: moon_id_moon_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.moon_id_moon_seq OWNED BY public.moon.id_moon;
+ALTER SEQUENCE public.moon_id_moon_seq OWNED BY public.moon.moon_id;
 
 
 --
@@ -131,7 +131,7 @@ ALTER SEQUENCE public.moon_id_moon_seq OWNED BY public.moon.id_moon;
 --
 
 CREATE TABLE public.planet (
-    id_planet integer NOT NULL,
+    planet_id integer NOT NULL,
     name character varying(50),
     description text,
     has_life boolean NOT NULL,
@@ -165,7 +165,7 @@ ALTER TABLE public.planet_id_planet_seq OWNER TO freecodecamp;
 -- Name: planet_id_planet_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.planet_id_planet_seq OWNED BY public.planet.id_planet;
+ALTER SEQUENCE public.planet_id_planet_seq OWNED BY public.planet.planet_id;
 
 
 --
@@ -173,7 +173,7 @@ ALTER SEQUENCE public.planet_id_planet_seq OWNED BY public.planet.id_planet;
 --
 
 CREATE TABLE public.star (
-    id_star integer NOT NULL,
+    star_id integer NOT NULL,
     name character varying(50),
     description text,
     has_life boolean NOT NULL,
@@ -207,7 +207,7 @@ ALTER TABLE public.star_id_star_seq OWNER TO freecodecamp;
 -- Name: star_id_star_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.star_id_star_seq OWNED BY public.star.id_star;
+ALTER SEQUENCE public.star_id_star_seq OWNED BY public.star.star_id;
 
 
 --
@@ -215,13 +215,14 @@ ALTER SEQUENCE public.star_id_star_seq OWNED BY public.star.id_star;
 --
 
 CREATE TABLE public.system (
-    id_system integer NOT NULL,
+    system_id integer NOT NULL,
     name character varying(30),
     description text,
     has_life boolean NOT NULL,
     is_spherical boolean NOT NULL,
     age_in_millions_of_years integer,
-    distance_from_earth integer
+    distance_from_earth integer,
+    number numeric
 );
 
 
@@ -246,42 +247,42 @@ ALTER TABLE public.system_id_system_seq OWNER TO freecodecamp;
 -- Name: system_id_system_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.system_id_system_seq OWNED BY public.system.id_system;
+ALTER SEQUENCE public.system_id_system_seq OWNED BY public.system.system_id;
 
 
 --
--- Name: galaxy id_galaxy; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: galaxy galaxy_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.galaxy ALTER COLUMN id_galaxy SET DEFAULT nextval('public.galaxy_id_galaxy_seq'::regclass);
-
-
---
--- Name: moon id_moon; Type: DEFAULT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.moon ALTER COLUMN id_moon SET DEFAULT nextval('public.moon_id_moon_seq'::regclass);
+ALTER TABLE ONLY public.galaxy ALTER COLUMN galaxy_id SET DEFAULT nextval('public.galaxy_id_galaxy_seq'::regclass);
 
 
 --
--- Name: planet id_planet; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: moon moon_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.planet ALTER COLUMN id_planet SET DEFAULT nextval('public.planet_id_planet_seq'::regclass);
-
-
---
--- Name: star id_star; Type: DEFAULT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.star ALTER COLUMN id_star SET DEFAULT nextval('public.star_id_star_seq'::regclass);
+ALTER TABLE ONLY public.moon ALTER COLUMN moon_id SET DEFAULT nextval('public.moon_id_moon_seq'::regclass);
 
 
 --
--- Name: system id_system; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: planet planet_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.system ALTER COLUMN id_system SET DEFAULT nextval('public.system_id_system_seq'::regclass);
+ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('public.planet_id_planet_seq'::regclass);
+
+
+--
+-- Name: star star_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.star_id_star_seq'::regclass);
+
+
+--
+-- Name: system system_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.system ALTER COLUMN system_id SET DEFAULT nextval('public.system_id_system_seq'::regclass);
 
 
 --
@@ -356,10 +357,10 @@ INSERT INTO public.star VALUES (6, 'star 6', 'descriprion 6', true, true, 600, '
 -- Data for Name: system; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.system VALUES (1, 'system 1', 'descriprion 1', true, true, 100, 1000);
-INSERT INTO public.system VALUES (2, 'system 1', 'descriprion 1', true, true, 100, 1000);
-INSERT INTO public.system VALUES (3, 'system 1', 'descriprion 1', true, true, 100, 1000);
-INSERT INTO public.system VALUES (4, 'system 1', 'descriprion 1', true, true, 100, 1000);
+INSERT INTO public.system VALUES (1, 'system 1', 'descriprion 1', true, true, 100, 1000, 1);
+INSERT INTO public.system VALUES (2, 'system 1', 'descriprion 1', true, true, 100, 1000, 2);
+INSERT INTO public.system VALUES (3, 'system 1', 'descriprion 1', true, true, 100, 1000, 3);
+INSERT INTO public.system VALUES (4, 'system 1', 'descriprion 1', true, true, 100, 1000, 4);
 
 
 --
@@ -394,7 +395,7 @@ SELECT pg_catalog.setval('public.star_id_star_seq', 6, true);
 -- Name: system_id_system_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.system_id_system_seq', 4, true);
+SELECT pg_catalog.setval('public.system_id_system_seq', 5, true);
 
 
 --
@@ -402,7 +403,7 @@ SELECT pg_catalog.setval('public.system_id_system_seq', 4, true);
 --
 
 ALTER TABLE ONLY public.galaxy
-    ADD CONSTRAINT galaxy_id_galaxy_key UNIQUE (id_galaxy);
+    ADD CONSTRAINT galaxy_id_galaxy_key UNIQUE (galaxy_id);
 
 
 --
@@ -410,7 +411,7 @@ ALTER TABLE ONLY public.galaxy
 --
 
 ALTER TABLE ONLY public.moon
-    ADD CONSTRAINT moon_pkey PRIMARY KEY (id_moon);
+    ADD CONSTRAINT moon_pkey PRIMARY KEY (moon_id);
 
 
 --
@@ -418,7 +419,7 @@ ALTER TABLE ONLY public.moon
 --
 
 ALTER TABLE ONLY public.planet
-    ADD CONSTRAINT planet_pkey PRIMARY KEY (id_planet);
+    ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
 
 
 --
@@ -426,7 +427,7 @@ ALTER TABLE ONLY public.planet
 --
 
 ALTER TABLE ONLY public.star
-    ADD CONSTRAINT star_pkey PRIMARY KEY (id_star);
+    ADD CONSTRAINT star_pkey PRIMARY KEY (star_id);
 
 
 --
@@ -434,7 +435,7 @@ ALTER TABLE ONLY public.star
 --
 
 ALTER TABLE ONLY public.system
-    ADD CONSTRAINT system_id_system_key UNIQUE (id_system);
+    ADD CONSTRAINT system_id_system_key UNIQUE (system_id);
 
 
 --
@@ -442,7 +443,7 @@ ALTER TABLE ONLY public.system
 --
 
 ALTER TABLE ONLY public.moon
-    ADD CONSTRAINT moon_id_planet_fkey FOREIGN KEY (id_planet) REFERENCES public.planet(id_planet);
+    ADD CONSTRAINT moon_id_planet_fkey FOREIGN KEY (id_planet) REFERENCES public.planet(planet_id);
 
 
 --
@@ -450,7 +451,7 @@ ALTER TABLE ONLY public.moon
 --
 
 ALTER TABLE ONLY public.planet
-    ADD CONSTRAINT planet_id_star_fkey FOREIGN KEY (id_star) REFERENCES public.star(id_star);
+    ADD CONSTRAINT planet_id_star_fkey FOREIGN KEY (id_star) REFERENCES public.star(star_id);
 
 
 --
@@ -458,7 +459,7 @@ ALTER TABLE ONLY public.planet
 --
 
 ALTER TABLE ONLY public.star
-    ADD CONSTRAINT star_id_galaxy_fkey FOREIGN KEY (id_galaxy) REFERENCES public.galaxy(id_galaxy);
+    ADD CONSTRAINT star_id_galaxy_fkey FOREIGN KEY (id_galaxy) REFERENCES public.galaxy(galaxy_id);
 
 
 --
